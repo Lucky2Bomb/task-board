@@ -1,0 +1,13 @@
+.very-small-button {
+    border: none;
+    background-color: inherit;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font-size: 12px;
+}
+
+.very-small-button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

@@ -1,0 +1,18 @@
+.modal__wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__container {
+  background-color: #fff;
+}
+
+.modal__container:active, .modal__container:focus {
+  outline: none;
+}
+
+.modal__container::-moz-focus-inner {
+  border: 0;
+}
