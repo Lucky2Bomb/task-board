@@ -1,9 +1,7 @@
 import { Button, colors, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useCardAuthor } from "../../hooks/author";
-import { useCardColumn } from "../../hooks/column";
 import useAppSelector from "../../hooks/useAppSelector";
 import { CardModel } from "../../models/card";
 import { removeCard } from "../../store/reducers/cardReducer";
@@ -28,12 +26,12 @@ function CardModal({ handleClose, handleSave, open, card }: CardModalProps) {
   const [additional, setAdditional] = useState(card.additional);
 
   const { currentAuthor, authors } = useAppSelector((state) => state.author);
+  const comments = useAppSelector((state) => state.comment.comments).filter((comment) => comment.card_id === card.id);
   const { columns } = useAppSelector((state) => state.column);
 
-  const cardAuthor = useCardAuthor(authors)(card);
-  const cardColumn = useCardColumn(columns)(card);
+  const cardAuthor = useMemo(() => authors.find((author) => author.id === card.author_id), [authors, card]);
+  const cardColumn = useMemo(() => columns.find((column) => column.id === card.column_id), [columns, card]);
 
-  const comments = useAppSelector((state) => state.comment.comments).filter((comment) => comment.card_id === card.id);
 
   const onAddComment = (value: string) => {
     if (currentAuthor) {

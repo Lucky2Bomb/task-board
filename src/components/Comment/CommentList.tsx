@@ -1,8 +1,8 @@
 import React from 'react';
-import { useCommentAuthor } from '../../hooks/author';
 import { AuthorModel } from '../../models/author';
 import { CommentModel } from '../../models/comment';
 import Comment from './Comment';
+import { memo } from 'react';
 
 interface CommentListProps {
     comments: CommentModel[];
@@ -11,19 +11,17 @@ interface CommentListProps {
 
 function CommentList({ comments, authors }: CommentListProps) {
 
-    const authorComment = useCommentAuthor(authors);
-
     return (
         <>
             {comments.map((comment) => (
                 <Comment
                     key={`comment_${comment.id}`}
                     comment={comment}
-                    author={authorComment(comment)}
+                    author={authors.find((author) => author.id === comment.author_id)}
                 />
             ))}
         </>
     );
 }
 
-export default CommentList;
+export default memo(CommentList);

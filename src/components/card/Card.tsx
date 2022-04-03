@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, Paper } from "@mui/material";
-import React, { useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import useAppSelector from "../../hooks/useAppSelector";
 import { CardModel } from "../../models/card";
@@ -8,7 +8,7 @@ import CountComments from "../icons/CountComments";
 import CardModal from "./CardModal";
 
 interface CardProps {
-  card?: CardModel;
+  card: CardModel;
 }
 
 function Card({ card }: CardProps) {
@@ -23,7 +23,7 @@ function Card({ card }: CardProps) {
     dispatch(editCard(card));
   };
 
-  const countComments = card ? comments.filter((comment) => comment.card_id === card.id).length : 0;
+  const countComments = useMemo(() => comments.filter((comment) => comment.card_id === card.id).length, [card.id, comments]);
 
   return (
     <Grid item>
@@ -56,4 +56,4 @@ function Card({ card }: CardProps) {
   );
 }
 
-export default Card;
+export default memo(Card);
